@@ -136,11 +136,8 @@ int main(void) {
 
     printf("Enter the password:\n");
 
-    if (fgets(buff, sizeof(buff), stdin) == NULL) {
-        return 1;
-    }
-
-    buff[strcspn(buff, "\n")] = '\0';
+    // VULNERABLE: no bounds checking, buff can overflow
+    gets(buff);
 
     if (strcmp(buff, "thegeekstuff") == 0) {
         printf("Correct Password\n");
@@ -164,7 +161,7 @@ Save with **Ctrl+O**, press **Enter**, and exit with **Ctrl+X**.
 Run:
 
 ```bash
-gcc -g -fno-stack-protector -z execstack -o buffer buffer.c
+gcc -fno-stack-protector -no-pie -z execstack -o buffer buffer.c
 ```
 
 - `-g` includes debugging symbols.
