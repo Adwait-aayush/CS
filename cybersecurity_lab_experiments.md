@@ -137,7 +137,7 @@ int main(void) {
     printf("Enter the password:\n");
 
     // VULNERABLE: no bounds checking, buff can overflow
-    gets(buff);
+    fgets(buff,sizeof(buff),stdin);
 
     if (strcmp(buff, "thegeekstuff") == 0) {
         printf("Correct Password\n");
